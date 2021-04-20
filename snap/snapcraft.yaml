@@ -1,0 +1,56 @@
+name: gtk-theme-qogirbudgie
+architectures:
+  - all
+version: '21.04'
+summary: QogirBudgie GTK theme for GTK Snaps
+description: |
+  A snap that exports the QogirBudgie GTK theme.
+
+base: core18
+grade: stable
+confinement: strict
+
+slots:
+  gtk-2-themes:
+    interface: content
+    source:
+      read:
+        - $SNAP/share/gtk2/QogirBudgie
+        - $SNAP/share/gtk2/QogirBudgie-dark
+        - $SNAP/share/gtk2/QogirBudgie-light
+  gtk-3-themes:
+    interface: content
+    source:
+      read:
+        - $SNAP/share/themes/QogirBudgie
+        - $SNAP/share/themes/QogirBudgie-dark
+        - $SNAP/share/themes/QogirBudgie-light
+
+parts:
+     
+  # QogirBudgie gtk theme
+  qogir-gtk-theme:
+    after: [utils]
+    plugin: nil
+    source: https://github.com/ubuntubudgie/Qogir-theme.git
+    source-type: git 
+    override-build: |
+        snapcraftctl build
+        snapcraftctl set-version "$(git describe --tags 2>/dev/null || echo 1.0)"
+        mkdir -p $SNAPCRAFT_PART_INSTALL/share/themes
+        ./InstallBudgie --dest $SNAPCRAFT_PART_INSTALL/share/themes
+        $SNAPCRAFT_STAGE/split-gtk-theme.sh $SNAPCRAFT_PART_INSTALL
+    stage:
+      - share/gtk2/*/gtk-2.0
+      - share/themes/*/gtk-3*
+#      - share/themes/*/gtk-4*
+
+
+  utils:
+    plugin: dump
+    source: utils
+    prime:
+      - -*
+    build-packages:
+      - try: [gtk-update-icon-cache]
+      - else: [libgtk-3-bin]
