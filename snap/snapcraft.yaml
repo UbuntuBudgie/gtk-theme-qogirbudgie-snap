@@ -38,7 +38,7 @@ parts:
         snapcraftctl build
         snapcraftctl set-version "$(git describe --tags 2>/dev/null || echo 1.0)"
         mkdir -p $SNAPCRAFT_PART_INSTALL/share/themes
-        ./InstallBudgie --dest $SNAPCRAFT_PART_INSTALL/share/themes
+        ./InstallBudgie -w square -l budgie -t standard -n QogirBudgie --dest $SNAPCRAFT_PART_INSTALL/share/themes
         $SNAPCRAFT_STAGE/split-gtk-theme.sh $SNAPCRAFT_PART_INSTALL
     stage:
       - share/gtk2/*/gtk-2.0
