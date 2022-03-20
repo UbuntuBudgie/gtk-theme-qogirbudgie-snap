@@ -7,6 +7,8 @@ description: |
   A snap that exports the QogirBudgie GTK theme.
 
 base: bare
+build-base: core20
+
 grade: stable
 confinement: strict
 
