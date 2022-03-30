@@ -1,7 +1,9 @@
 name: gtk-theme-qogirbudgie
 architectures:
-  - all
-version: '22.04'
+  - build-on: amd64
+    run-on: all
+
+version: '22.04.1'
 summary: QogirBudgie GTK theme for GTK Snaps
 description: |
   A snap that exports the QogirBudgie GTK theme.
@@ -27,22 +29,15 @@ slots:
         - $SNAP/share/themes/QogirBudgie
         - $SNAP/share/themes/QogirBudgie-dark
         - $SNAP/share/themes/QogirBudgie-light
-  gtk-4-themes:
-    interface: content
-    source:
-      read:
-        - $SNAP/share/themes/QogirBudgie
-        - $SNAP/share/themes/QogirBudgie-dark
-        - $SNAP/share/themes/QogirBudgie-light
 
 parts:
-     
+
   # QogirBudgie gtk theme
   qogir-gtk-theme:
     after: [utils]
     plugin: nil
     source: https://github.com/ubuntubudgie/Qogir-theme.git
-    source-type: git 
+    source-type: git
     override-build: |
         snapcraftctl build
         snapcraftctl set-version "$(git describe --tags 2>/dev/null || echo 1.0)"
@@ -52,7 +47,6 @@ parts:
     stage:
       - share/gtk2/*/gtk-2.0
       - share/themes/*/gtk-3*
-      - share/themes/*/gtk-4*
 
 
   utils:
