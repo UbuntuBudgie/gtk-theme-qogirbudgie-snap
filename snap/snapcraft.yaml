@@ -3,7 +3,7 @@ architectures:
   - build-on: amd64
     run-on: all
 
-version: '22.04.2'
+version: '22.04.1'
 summary: QogirBudgie GTK theme for GTK Snaps
 description: |
   A snap that exports the QogirBudgie GTK theme.
@@ -29,20 +29,6 @@ slots:
         - $SNAP/share/themes/QogirBudgie
         - $SNAP/share/themes/QogirBudgie-dark
         - $SNAP/share/themes/QogirBudgie-light
-  content:
-    allow-auto-connection:
-      -
-        plug-attributes:
-          content: $SLOT(content)
-        slot-attributes:
-          content: gtk-2-themes
-        slots-per-plug: "*"
-      -
-        plug-attributes:
-          content: $SLOT(content)
-        slot-attributes:
-          content: gtk-3-themes
-        slots-per-plug: "*"
 
 parts:
 
